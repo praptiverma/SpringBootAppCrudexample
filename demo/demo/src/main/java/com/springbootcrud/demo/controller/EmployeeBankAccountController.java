@@ -47,7 +47,7 @@ public class EmployeeBankAccountController {
     public ResponseEntity<BankAccount> updateAccount(@PathVariable(value = "accountNo") String accountNo,
                                                      @RequestBody BankAccount bankDetails) throws ResourceNotFoundException {
         try {
-            BankAccount account = getAllAccounts().stream().filter(s -> s.getAccountNo() == accountNo).collect(Collectors.toList()).get(0);
+            BankAccount account = getAllAccounts().stream().filter(s -> s.getAccountNo().equalsIgnoreCase(accountNo)).collect(Collectors.toList()).get(0);
             account.setAccountName(bankDetails.getAccountName());
             account.setAccountNo(bankDetails.getAccountNo());
             account.setBankName(bankDetails.getBankName());
@@ -66,7 +66,7 @@ public class EmployeeBankAccountController {
     public Map<String, Boolean> deleteEmployee(@PathVariable(value = "accountNo") String accountNo)
             throws ResourceNotFoundException {
         try {
-            BankAccount account = getAllAccounts().stream().filter(s -> s.getAccountNo() == accountNo).collect(Collectors.toList()).get(0);
+            BankAccount account = getAllAccounts().stream().filter(s -> s.getAccountNo().equalsIgnoreCase(accountNo)).collect(Collectors.toList()).get(0);
             bankAccountDataRepository.delete(account);
             Map<String, Boolean> response = new HashMap<>();
             response.put("deleted", Boolean.TRUE);
